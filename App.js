@@ -1,14 +1,10 @@
 import {
   StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
   Platform,
   StatusBar,
   SafeAreaView
 } from 'react-native';
+import List from './components/List';
 
 const App = () => {
   const mediaArray = [
@@ -46,24 +42,7 @@ const App = () => {
   return (
     <>
       <SafeAreaView style={styles.AndroidSafeArea}>
-        <FlatList
-          style={{flex:1,flexDirection:"column"}}
-          data={mediaArray}
-          renderItem={({item}) => {
-            return (
-                <TouchableOpacity style={styles.cardContainer}>
-                    <Image
-                      style={{width:150, height: 280,resizeMode:"cover"}}
-                      source={{uri: item.thumbnails.w160}}
-                    />
-                    <View style={{flex:1,flexGrow:1,paddingLeft:15}}>
-                      <Text style={{fontSize:20,fontWeight:"bold"}}>{item.title}</Text>
-                      <Text>{item.description}</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-          }}
-        />
+        <List list={mediaArray}/>
       </SafeAreaView>
       <StatusBar style="auto" />
     </>
@@ -74,14 +53,6 @@ const styles = StyleSheet.create({
   AndroidSafeArea: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex:1,
-  },
-  cardContainer: {
-    backgroundColor:"#e3e3e3",
-    marginTop:10,
-    padding:15,
-    flexDirection:"row",
-    justifyContent:"flex-start",
-    flex:1
   }
 });
 
