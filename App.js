@@ -1,12 +1,8 @@
-import {
-  StyleSheet,
-  Platform,
-  StatusBar,
-  SafeAreaView
-} from 'react-native';
+import {StyleSheet, Platform, StatusBar, SafeAreaView} from 'react-native';
 import List from './components/List';
 
 const App = () => {
+  console.log('hello');
   const mediaArray = [
     {
       key: '0',
@@ -42,7 +38,7 @@ const App = () => {
   return (
     <>
       <SafeAreaView style={styles.AndroidSafeArea}>
-        <List list={mediaArray}/>
+        <List list={mediaArray} />
       </SafeAreaView>
       <StatusBar style="auto" />
     </>
@@ -51,9 +47,9 @@ const App = () => {
 
 const styles = StyleSheet.create({
   AndroidSafeArea: {
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    flex:1,
-  }
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    flex: 1,
+  },
 });
 
 export default App;
