@@ -1,21 +1,10 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  View,
-  Text,
-  Modal,
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, TouchableOpacity, Image, View, Text} from 'react-native';
 import PropTypes from 'prop-types';
 
 const ListItem = ({singleMedia}) => {
-  const [modalVisible, setModalVisible] = useState(false);
   return (
-    <TouchableOpacity
-      style={styles.cardContainer}
-      onPress={() => setModalVisible(!modalVisible)}
-    >
+    <TouchableOpacity style={styles.cardContainer}>
       <Image
         style={{width: 150, height: 280, resizeMode: 'cover'}}
         source={{uri: singleMedia.thumbnails.w160}}
@@ -27,16 +16,6 @@ const ListItem = ({singleMedia}) => {
         </Text>
         <Text>{singleMedia.description}</Text>
       </View>
-
-      <Modal animationType="none" transparent={true} visible={modalVisible}>
-        <View>
-          <Text
-            style={{fontWeight: 'bold', backgroundColor: 'red', color: 'white'}}
-          >
-            {singleMedia.filename}
-          </Text>
-        </View>
-      </Modal>
     </TouchableOpacity>
   );
 };

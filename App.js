@@ -2,7 +2,6 @@ import {StyleSheet, Platform, StatusBar, SafeAreaView} from 'react-native';
 import List from './components/List';
 
 const App = () => {
-  console.log('hello');
   const mediaArray = [
     {
       key: '0',
