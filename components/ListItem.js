@@ -1,13 +1,14 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Image, View, Text} from 'react-native';
 import PropTypes from 'prop-types';
+import {uploadsUrl} from '../utils/variables';
 
 const ListItem = ({singleMedia}) => {
   return (
     <TouchableOpacity style={styles.cardContainer}>
       <Image
         style={{width: 150, height: 280, resizeMode: 'cover'}}
-        source={{uri: singleMedia.thumbnails.w160}}
+        source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}}
       />
 
       <View style={{flex: 1, flexGrow: 1, paddingLeft: 15}}>
