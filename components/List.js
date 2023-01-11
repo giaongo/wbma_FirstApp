@@ -5,7 +5,8 @@ import ListItem from './ListItem';
 const List = () => {
   const url =
     'https://raw.githubusercontent.com/mattpe/wbma/master/docs/assets/test.json';
-  const [media, setMedia] = useState([]);
+  const [mediaArray, setMediaArray] = useState([]);
+
   const loadMedia = async () => {
     try {
       const response = await fetch(url);
@@ -17,14 +18,14 @@ const List = () => {
   };
   useEffect(() => {
     loadMedia().then((data) => {
-      setMedia(data);
+      setMediaArray(data);
     });
   }, []);
 
   return (
     <FlatList
       style={{flex: 1, flexDirection: 'column'}}
-      data={media}
+      data={mediaArray}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => <ListItem singleMedia={item} />}
     />
