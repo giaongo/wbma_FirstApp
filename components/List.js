@@ -11,15 +11,13 @@ const List = () => {
     try {
       const response = await fetch(url);
       const json = await response.json();
-      return json;
+      setMediaArray(json);
     } catch (e) {
-      console.log('error', e);
+      console.error('error', e);
     }
   };
   useEffect(() => {
-    loadMedia().then((data) => {
-      setMediaArray(data);
-    });
+    loadMedia();
   }, []);
 
   return (
