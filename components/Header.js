@@ -10,7 +10,7 @@ const Header = () => {
         source={puppyImage}
         resizeMode="cover"
         style={styles.backgroundImg}
-        borderBottomRightRadius="30"
+        borderBottomRightRadius={50}
       >
         <Text style={styles.bannerText}>Homeless Kittens</Text>
         <Settings style={styles.settingIcon} />
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   banner: {
     height: 150,
     position: 'relative',
-    padding: 10,
   },
   backgroundImg: {
     flex: 1,

@@ -5,13 +5,13 @@ import List from './components/List';
 const App = () => {
   return (
     <>
+      <StatusBar backgroundColor={'#ff3300'} />
       <SafeAreaView style={styles.AndroidSafeArea}>
         <Header />
         <View style={{flex: 1}}>
           <List />
         </View>
       </SafeAreaView>
-      <StatusBar style="auto" />
     </>
   );
 };
