@@ -1,4 +1,10 @@
-import {StyleSheet, StatusBar, SafeAreaView, View} from 'react-native';
+import {
+  StyleSheet,
+  StatusBar,
+  SafeAreaView,
+  View,
+  Platform,
+} from 'react-native';
 import Header from './components/Header';
 import List from './components/List';
 
@@ -20,6 +26,7 @@ const styles = StyleSheet.create({
   AndroidSafeArea: {
     flex: 1,
     backgroundColor: '#111',
+    paddingTop: Platform.OS === 'android' ? 30 : 0,
   },
 });
 
