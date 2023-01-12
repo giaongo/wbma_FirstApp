@@ -7,7 +7,7 @@ const ListItem = ({singleMedia}) => {
   return (
     <TouchableOpacity style={styles.cardContainer}>
       <Image
-        style={{width: 150, height: 280, resizeMode: 'cover'}}
+        style={{width: 150, height: 150, resizeMode: 'cover'}}
         source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}}
       />
 

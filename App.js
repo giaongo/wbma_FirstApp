@@ -1,11 +1,15 @@
-import {StyleSheet, Platform, StatusBar, SafeAreaView} from 'react-native';
+import {StyleSheet, StatusBar, SafeAreaView, View} from 'react-native';
+import Header from './components/Header';
 import List from './components/List';
 
 const App = () => {
   return (
     <>
       <SafeAreaView style={styles.AndroidSafeArea}>
-        <List />
+        <Header />
+        <View style={{flex: 1}}>
+          <List />
+        </View>
       </SafeAreaView>
       <StatusBar style="auto" />
     </>
@@ -14,8 +18,8 @@ const App = () => {
 
 const styles = StyleSheet.create({
   AndroidSafeArea: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     flex: 1,
+    backgroundColor: '#fff',
   },
 });
 

@@ -7,7 +7,6 @@ const List = () => {
   const {mediaArray} = useMedia();
   return (
     <FlatList
-      style={{flex: 1, flexDirection: 'column'}}
       data={mediaArray}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => <ListItem singleMedia={item} />}
