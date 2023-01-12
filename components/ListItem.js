@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
 
 const ListItem = ({singleMedia, navigation}) => {
+  const item = singleMedia;
   return (
     <TouchableOpacity
       style={styles.cardContainer}
       onPress={() => {
-        navigation.navigate('Single');
+        navigation.navigate('Single', item);
       }}
     >
       <Image
