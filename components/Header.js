@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     bottom: 10,
     color: 'white',
     backgroundColor: 'blue',
+    padding: 10,
   },
   settingIcon: {
     position: 'absolute',

@@ -7,15 +7,13 @@ const ListItem = ({singleMedia}) => {
   return (
     <TouchableOpacity style={styles.cardContainer}>
       <Image
-        style={{width: 150, height: 150, resizeMode: 'cover'}}
+        style={styles.cardImage}
         source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}}
       />
 
-      <View style={{flex: 1, flexGrow: 1, paddingLeft: 15}}>
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-          {singleMedia.title}
-        </Text>
-        <Text>{singleMedia.description}</Text>
+      <View style={styles.cardTextBox}>
+        <Text style={styles.cardTextHeader}>{singleMedia.title}</Text>
+        <Text style={styles.cardTextParagraph}>{singleMedia.description}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -27,12 +25,32 @@ ListItem.propTypes = {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: '#e3e3e3',
+    backgroundColor: 'rgba(56,56,56,0.5)',
     marginTop: 10,
-    padding: 15,
+    padding: 25,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flex: 1,
+    marginHorizontal: 10,
+  },
+  cardImage: {
+    width: 150,
+    height: 150,
+    resizeMode: 'cover',
+    borderBottomLeftRadius: 25,
+  },
+  cardTextBox: {
+    flex: 1,
+    flexGrow: 1,
+    paddingLeft: 15,
+  },
+  cardTextHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  cardTextParagraph: {
+    color: '#a19f9f',
   },
 });
 export default ListItem;

@@ -19,7 +19,7 @@ const App = () => {
 const styles = StyleSheet.create({
   AndroidSafeArea: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#111',
   },
 });
 
