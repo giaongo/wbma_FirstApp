@@ -73,6 +73,23 @@ const useUser = () => {
       throw new Error('getUser ', error.message);
     }
   };
-  return {getUserByToken};
+
+  const postUser = async (userData) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    };
+    try {
+      // TODO: use fetch to send request to login endpoint and return the result as json, handle errors with try/catch and response.ok
+      return await doFetch(baseUrl + 'users', options);
+    } catch (error) {
+      throw new Error('postUser ' + error.message);
+    }
+  };
+  return {getUserByToken, postUser};
 };
+
 export {useMedia, useAuthentication, useUser};

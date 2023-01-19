@@ -1,33 +1,29 @@
 import React, {useContext, useEffect} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useAuthentication, useUser} from '../hooks/ApiHooks';
+import {useUser} from '../hooks/ApiHooks';
+import LoginForm from '../components/LoginForm';
+import RegisterForm from '../components/RegisterForm';
 
 const Login = ({navigation}) => {
-  const {setIsLoggedIn} = useContext(MainContext);
-  const {postLogin} = useAuthentication();
-
-  const logIn = async () => {
-    console.log('Button pressed');
-    const data = {username: 'giao', password: 'giao12345'};
-    try {
-      const loginResult = await postLogin(data);
-      console.log('logIn', loginResult);
-      await AsyncStorage.setItem('userToken', loginResult.token);
-      setIsLoggedIn(true);
-    } catch (error) {
-      console.error('Error with login', error);
-    }
-  };
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
+  const {getUserByToken} = useUser();
 
   const checkToken = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
-      const {getUserByToken} = useUser();
+      if (!userToken) return;
       const userResult = await getUserByToken(userToken);
       if (userResult) {
+        setUser(userResult);
         setIsLoggedIn(true);
       }
     } catch (error) {
@@ -40,10 +36,19 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-      <Button title="Sign in!" onPress={logIn} />
-    </View>
+    <TouchableOpacity
+      onPress={() => Keyboard.dismiss()}
+      style={{flex: 1}}
+      activeOpacity={1}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+      >
+        <LoginForm />
+        <RegisterForm />
+      </KeyboardAvoidingView>
+    </TouchableOpacity>
   );
 };
 
