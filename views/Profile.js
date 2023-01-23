@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Card, Icon, ListItem} from '@rneui/themed';
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, SafeAreaView, Text, Button, Image} from 'react-native';
+import {Button} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
@@ -12,8 +13,9 @@ const Profile = () => {
 
   const loadAvatar = async () => {
     try {
-      const avatarArray = await getFilesByTag('avatar_' + '2689');
+      const avatarArray = await getFilesByTag('avatar_' + user.user_id);
       setAvatar(avatarArray.pop());
+      console.log(' avatar ', avatar);
     } catch (error) {
       console.log('user avatar fetch failed', error.messsage);
     }
@@ -24,12 +26,17 @@ const Profile = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Profile</Text>
-      <Image source={{uri: uploadsUrl + avatar}} style={styles.image} />
-      <Text>username: {user.username}</Text>
-      <Text>email: {user.email}</Text>
-      <Text>fullname: {user.full_name}</Text>
+    <Card>
+      <Card.Title>{user.username}</Card.Title>
+      <Card.Image source={{uri: uploadsUrl + avatar.filename}} />
+      <ListItem>
+        <Icon name="email"></Icon>
+        <ListItem.Title>{user.email}</ListItem.Title>
+      </ListItem>
+      <ListItem>
+        <Icon name="badge"></Icon>
+        <ListItem.Title>{user.full_name}</ListItem.Title>
+      </ListItem>
       <Button
         title="Logout!"
         onPress={async () => {
@@ -43,21 +50,8 @@ const Profile = () => {
           }
         }}
       />
-    </SafeAreaView>
+    </Card>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-  image: {
-    width: 200,
-    height: 300,
-  },
-});
 export default Profile;

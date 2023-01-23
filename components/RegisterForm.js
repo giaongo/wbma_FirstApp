@@ -1,6 +1,7 @@
+import {Input, Button} from '@rneui/themed';
 import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {View, Text, TextInput, Button} from 'react-native';
+import {View, Text} from 'react-native';
 import {useUser} from '../hooks/ApiHooks';
 
 const RegisterForm = () => {
@@ -32,7 +33,16 @@ const RegisterForm = () => {
 
   return (
     <View>
-      <Text>Registration Form</Text>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 22,
+          fontWeight: 'bold',
+          marginTop: 16,
+        }}
+      >
+        Registration Form
+      </Text>
       <Controller
         control={control}
         rules={{
@@ -40,7 +50,7 @@ const RegisterForm = () => {
           minLength: 3,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Username"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -61,7 +71,7 @@ const RegisterForm = () => {
           minLength: 5,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Password"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -79,7 +89,7 @@ const RegisterForm = () => {
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Email"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -96,7 +106,7 @@ const RegisterForm = () => {
           minLength: 3,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Fullname"
             onBlur={onBlur}
             onChangeText={onChange}

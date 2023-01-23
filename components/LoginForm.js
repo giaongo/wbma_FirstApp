@@ -1,9 +1,10 @@
 import React, {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Text, Button, View, TextInput} from 'react-native';
+import {Text, View} from 'react-native';
 import {useAuthentication} from '../hooks/ApiHooks';
 import {Controller, useForm} from 'react-hook-form';
+import {Input, Button} from '@rneui/themed';
 
 const LoginForm = () => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -34,7 +35,16 @@ const LoginForm = () => {
 
   return (
     <View>
-      <Text>Login Form</Text>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 22,
+          fontWeight: 'bold',
+          marginTop: 16,
+        }}
+      >
+        Login
+      </Text>
       <Controller
         control={control}
         rules={{
@@ -42,7 +52,7 @@ const LoginForm = () => {
           minLength: 3,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="username"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -62,7 +72,7 @@ const LoginForm = () => {
           minLength: 5,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="password"
             onBlur={onBlur}
             onChangeText={onChange}
