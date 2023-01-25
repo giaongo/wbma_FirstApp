@@ -5,7 +5,7 @@ import {View, Text} from 'react-native';
 import {useUser} from '../hooks/ApiHooks';
 
 const RegisterForm = () => {
-  const {postUser} = useUser();
+  const {postUser, checkUsername} = useUser();
   // const {setIsLoggedIn} = useContext(MainContext);
   // const {postLogin} = useAuthentication();
   const {
@@ -19,6 +19,7 @@ const RegisterForm = () => {
       email: '',
       full_name: '',
     },
+    mode: 'onBlur',
   });
 
   const register = async (registerData) => {
@@ -28,6 +29,16 @@ const RegisterForm = () => {
       console.log('Registration result', registerResult);
     } catch (error) {
       console.error('Error with registering', error);
+    }
+  };
+
+  const checkUser = async (username) => {
+    try {
+      const userAvailable = await checkUsername(username);
+      console.log('check user', userAvailable);
+      return userAvailable || 'Username is already taken';
+    } catch (error) {
+      console.error('checkUser', error.message);
     }
   };
 
@@ -46,8 +57,9 @@ const RegisterForm = () => {
       <Controller
         control={control}
         rules={{
-          required: true,
-          minLength: 3,
+          required: {value: true, message: 'This is required'},
+          minLength: {value: 3, message: 'Username min length is 3 characters'},
+          validate: checkUser,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
@@ -55,20 +67,26 @@ const RegisterForm = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            autoCapitalize="none"
+            errorMessage={errors.username && errors.username.message}
           />
         )}
         name="username"
       />
-      {errors.username?.type === 'required' && <Text>is required</Text>}
-      {errors.username?.type === 'minLength' && (
-        <Text>Min length is 3 characters</Text>
-      )}
 
       <Controller
         control={control}
         rules={{
-          required: true,
-          minLength: 5,
+          required: {
+            value: true,
+            message:
+              'min.5 characters, needs one number and one uppercase letter',
+          },
+          pattern: {
+            value: /(?=.*\p{Lu})(?=.*[0-9]).{5,}/u,
+            message:
+              'min.5 characters, needs one number and one uppercase letter',
+          },
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
@@ -77,11 +95,11 @@ const RegisterForm = () => {
             onChangeText={onChange}
             value={value}
             secureTextEntry={true}
+            errorMessage={errors.password && errors.password.message}
           />
         )}
         name="password"
       />
-      {errors.password && <Text>Password (min.5 characters) is required</Text>}
 
       <Controller
         control={control}
@@ -94,6 +112,7 @@ const RegisterForm = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            autoCapitalize="none"
           />
         )}
         name="email"
@@ -111,6 +130,7 @@ const RegisterForm = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            autoCapitalize="words"
           />
         )}
         name="full_name"

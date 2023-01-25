@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -11,11 +11,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import {Button} from '@rneui/themed';
+import {Text} from 'react-native';
 
 const Login = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
 
+  const [toggleForm, setToggleForm] = useState(true);
   const checkToken = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
@@ -43,8 +46,16 @@ const Login = ({navigation}) => {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <LoginForm />
-        <RegisterForm />
+        {toggleForm ? <LoginForm /> : <RegisterForm />}
+        <Text>
+          {toggleForm ? 'No account yet?Please register' : 'Go to login'}
+        </Text>
+        <Button
+          title={toggleForm ? 'Register' : 'Login'}
+          onPress={() => {
+            setToggleForm(!toggleForm);
+          }}
+        />
       </KeyboardAvoidingView>
     </TouchableOpacity>
   );
