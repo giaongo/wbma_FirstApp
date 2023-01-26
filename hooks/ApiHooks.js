@@ -99,7 +99,21 @@ const useUser = () => {
     }
   };
 
-  return {getUserByToken, postUser, checkUsername};
+  const modifyUserdata = async (userData) => {
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    };
+    try {
+      return await doFetch(baseUrl + '/users', options);
+    } catch (error) {
+      throw new Error('updateuser ' + error.message);
+    }
+  };
+  return {getUserByToken, postUser, checkUsername, modifyUserdata};
 };
 
 const useTag = () => {

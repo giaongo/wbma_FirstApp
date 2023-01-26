@@ -42,20 +42,26 @@ const Login = ({navigation}) => {
     <ScrollView>
       <TouchableOpacity
         onPress={() => Keyboard.dismiss()}
-        style={{flex: 1}}
+        style={{flex: 1, padding: 10}}
         activeOpacity={1}
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
           {toggleForm ? <LoginForm /> : <RegisterForm />}
-          <Text>
+          <Text style={{marginTop: 16}}>
             {toggleForm ? 'No account yet?Please register' : 'Go to login'}
           </Text>
           <Button
             title={toggleForm ? 'Register' : 'Login'}
             onPress={() => {
               setToggleForm(!toggleForm);
+            }}
+            buttonStyle={{
+              backgroundColor: 'rgba(111, 202, 186, 1)',
+            }}
+            containerStyle={{
+              width: 200,
             }}
           />
         </KeyboardAvoidingView>
