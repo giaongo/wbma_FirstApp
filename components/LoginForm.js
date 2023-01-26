@@ -61,10 +61,7 @@ const LoginForm = () => {
         )}
         name="username"
       />
-      {errors.username?.type === 'required' && <Text>is required</Text>}
-      {errors.username?.type === 'minLength' && (
-        <Text>Min length is 3 characters</Text>
-      )}
+
       <Controller
         control={control}
         rules={{
@@ -82,7 +79,6 @@ const LoginForm = () => {
         )}
         name="password"
       />
-
       <Button title="Sign in!" onPress={handleSubmit(logIn)} />
     </View>
   );
