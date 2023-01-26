@@ -48,8 +48,7 @@ const LoginForm = () => {
       <Controller
         control={control}
         rules={{
-          required: true,
-          minLength: 3,
+          required: {value: true, message: 'is required'},
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
@@ -57,6 +56,7 @@ const LoginForm = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            errorMessage={errors.username && errors.username.message}
           />
         )}
         name="username"
@@ -68,8 +68,7 @@ const LoginForm = () => {
       <Controller
         control={control}
         rules={{
-          required: true,
-          minLength: 5,
+          required: {value: true, message: 'required'},
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
@@ -78,11 +77,12 @@ const LoginForm = () => {
             onChangeText={onChange}
             value={value}
             secureTextEntry={true}
+            errorMessage={errors.password && errors.password.message}
           />
         )}
         name="password"
       />
-      {errors.password && <Text>Password (min.5 characters) is required</Text>}
+
       <Button title="Sign in!" onPress={handleSubmit(logIn)} />
     </View>
   );

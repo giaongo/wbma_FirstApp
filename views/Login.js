@@ -3,6 +3,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -38,26 +39,28 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <TouchableOpacity
-      onPress={() => Keyboard.dismiss()}
-      style={{flex: 1}}
-      activeOpacity={1}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <ScrollView>
+      <TouchableOpacity
+        onPress={() => Keyboard.dismiss()}
+        style={{flex: 1}}
+        activeOpacity={1}
       >
-        {toggleForm ? <LoginForm /> : <RegisterForm />}
-        <Text>
-          {toggleForm ? 'No account yet?Please register' : 'Go to login'}
-        </Text>
-        <Button
-          title={toggleForm ? 'Register' : 'Login'}
-          onPress={() => {
-            setToggleForm(!toggleForm);
-          }}
-        />
-      </KeyboardAvoidingView>
-    </TouchableOpacity>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          {toggleForm ? <LoginForm /> : <RegisterForm />}
+          <Text>
+            {toggleForm ? 'No account yet?Please register' : 'Go to login'}
+          </Text>
+          <Button
+            title={toggleForm ? 'Register' : 'Login'}
+            onPress={() => {
+              setToggleForm(!toggleForm);
+            }}
+          />
+        </KeyboardAvoidingView>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
