@@ -32,22 +32,4 @@ ListItem.propTypes = {
   navigation: PropTypes.object,
 };
 
-// const styles = StyleSheet.create({
-//   cardImage: {
-//     borderBottomLeftRadius: 25,
-//   },
-//   cardTextBox: {
-//     flex: 1,
-//     flexGrow: 1,
-//     paddingLeft: 15,
-//   },
-//   cardTextHeader: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     color: 'white',
-//   },
-//   cardTextParagraph: {
-//     color: '#a19f9f',
-//   },
-// });
 export default ListItem;

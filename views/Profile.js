@@ -72,7 +72,7 @@ const Profile = () => {
               }}
             />
           </Card>
-          {showModifyForm ? <ProfileForm user={user} /> : <View></View>}
+          {showModifyForm ? <ProfileForm /> : <View></View>}
         </KeyboardAvoidingView>
       </TouchableOpacity>
     </ScrollView>

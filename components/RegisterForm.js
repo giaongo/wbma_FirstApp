@@ -5,8 +5,6 @@ import {useUser} from '../hooks/ApiHooks';
 
 const RegisterForm = () => {
   const {postUser, checkUsername} = useUser();
-  // const {setIsLoggedIn} = useContext(MainContext);
-  // const {postLogin} = useAuthentication();
   const {
     control,
     getValues,

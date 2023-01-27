@@ -1,10 +1,13 @@
 import {Card, Input, Button} from '@rneui/themed';
-import React from 'react';
+import React, {useContext} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import PropTypes from 'prop-types';
 import {useUser} from '../hooks/ApiHooks';
-const ProfileForm = ({user}) => {
-  const {checkUsername} = useUser();
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {MainContext} from '../contexts/MainContext';
+const ProfileForm = () => {
+  const {checkUsername, modifyUserdata, getUserByToken} = useUser();
+  const {user, setUser} = useContext(MainContext);
   const {
     control,
     getValues,
@@ -20,15 +23,29 @@ const ProfileForm = ({user}) => {
     mode: 'onBlur',
   });
 
-  const updateUser = (updateData) => {
-    console.log('Update data button pressed', updateData);
+  const updateUser = async (updateData) => {
+    delete updateData.confirmPassword;
+    if (!updateData.password) {
+      delete updateData.password;
+    }
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      const result = await modifyUserdata(updateData, userToken);
+      if (result.message) {
+        const updatedUserData = await getUserByToken(userToken);
+        if (updatedUserData) {
+          setUser(updatedUserData);
+        }
+      }
+    } catch (error) {
+      console.error('update profile error', error.message);
+    }
   };
 
   const checkUser = async (username) => {
     try {
       if (username !== user.username) {
         const userAvailable = await checkUsername(username);
-        console.log('check user', userAvailable);
         return userAvailable || 'Username is already taken';
       } else {
         return true;
