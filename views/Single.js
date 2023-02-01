@@ -18,7 +18,9 @@ const Single = ({route}) => {
           <Icon name="photo" />
           <ListItem.Content>
             <ListItem.Title>{description}</ListItem.Title>
-            <ListItem.Subtitle>{timeAdded}</ListItem.Subtitle>
+            <ListItem.Subtitle>
+              {new Date(timeAdded).toLocaleString('fi-FI')}
+            </ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
       </Card>
@@ -35,6 +37,7 @@ const styles = StyleSheet.create({
   image: {
     padding: 0,
     resizeMode: 'cover',
+    height: 300,
   },
 });
 
