@@ -1,13 +1,7 @@
 import PropTypes from 'prop-types';
 import {Controller, useForm} from 'react-hook-form';
 import {Input, Button, Card} from '@rneui/themed';
-import {
-  ActivityIndicator,
-  Alert,
-  Keyboard,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {Alert, Keyboard, ScrollView, TouchableOpacity} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import {useCallback, useContext, useState} from 'react';
 import {useMedia, useTag} from '../hooks/ApiHooks';
@@ -170,7 +164,6 @@ const Upload = ({navigation}) => {
             loadingProps={{size: 'small', color: 'white'}}
           />
           <Button title={'Reset'} onPress={resetForm} type="outline" />
-          {loading && <ActivityIndicator size="large" />}
         </Card>
       </TouchableOpacity>
     </ScrollView>
