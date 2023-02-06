@@ -1,26 +1,106 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
-import {Card, ListItem, Icon} from '@rneui/themed';
+import {Card, ListItem, Icon, Text} from '@rneui/themed';
+import {Video} from 'expo-av';
+import {useFavourite, useUser} from '../hooks/ApiHooks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Single = ({route}) => {
-  const {title, description, filename, time_added: timeAdded} = route.params;
+  const {
+    file_id: fileId,
+    title,
+    description,
+    filename,
+    time_added: timeAdded,
+    media_type: type,
+    user_id: userId,
+    screenshot,
+  } = route.params;
+  const video = useRef(null);
+  const [owner, setOwner] = useState({});
+  const {getUserById} = useUser();
+  const [likes, setLikes] = useState([]);
+  const {getFavouritesByFileId, postFavourite, deleteFavourite} =
+    useFavourite();
+  const [userLikesIt, setUserLikesIt] = useState(false);
+  const getOwnerInformation = async () => {
+    const token = await AsyncStorage.getItem('userToken');
+    const owner = await getUserById(userId, token);
+    setOwner(owner);
+  };
+  const getLikes = async () => {
+    const likes = await getFavouritesByFileId(fileId);
+    console.log('likes', likes);
+    setLikes(likes);
+  };
+
+  const likeFiles = async () => {
+    const token = await AsyncStorage.getItem('userToken');
+    await postFavourite(fileId, token);
+    getLikes();
+    setUserLikesIt(true);
+  };
+
+  const dislikeFiles = async () => {
+    const token = await AsyncStorage.getItem('userToken');
+    await deleteFavourite(fileId, token);
+    getLikes();
+    setUserLikesIt(false);
+  };
+
+  useEffect(() => {
+    getOwnerInformation();
+    getLikes();
+  }, []);
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
       <Card>
-        <Card.Image
-          source={{uri: uploadsUrl + filename}}
-          style={styles.image}
-        />
+        <Card.Divider />
+        {type === 'image' ? (
+          <Card.Image
+            source={{uri: uploadsUrl + filename}}
+            style={styles.image}
+          />
+        ) : (
+          <Video
+            ref={video}
+            source={{uri: uploadsUrl + filename}}
+            style={{width: '100%', height: '60%'}}
+            useNativeControls
+            resizeMode="contain"
+            isLooping
+            onError={(error) => {
+              console.log(error);
+            }}
+            usePoster
+            posterSource={{uri: uploadsUrl + screenshot}}
+          />
+        )}
+        <Card.Divider />
         <Card.Title>{title}</Card.Title>
         <ListItem>
           <Icon name="photo" />
           <ListItem.Content>
-            <ListItem.Title>{description}</ListItem.Title>
+            {description && <ListItem.Title>{description}</ListItem.Title>}
+            <ListItem.Title>
+              <Icon name="person" />
+              <Text>{owner && owner.username}</Text>
+            </ListItem.Title>
             <ListItem.Subtitle>
               {new Date(timeAdded).toLocaleString('fi-FI')}
             </ListItem.Subtitle>
+            <ListItem.Title>
+              {userLikesIt ? (
+                <Icon name="favorite" onPress={dislikeFiles} />
+              ) : (
+                <Icon name="favorite-border" onPress={likeFiles} />
+              )}
+
+              <Text>Likes: {likes.length}</Text>
+            </ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </Card>

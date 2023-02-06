@@ -3,19 +3,20 @@ import {Controller, useForm} from 'react-hook-form';
 import {Input, Button, Card} from '@rneui/themed';
 import {Alert, Keyboard, ScrollView, TouchableOpacity} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import {useCallback, useContext, useState} from 'react';
+import {useCallback, useContext, useRef, useState} from 'react';
 import {useMedia, useTag} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainContext} from '../contexts/MainContext';
 import {useFocusEffect} from '@react-navigation/native';
 import {appId} from '../utils/variables';
-
+import {Video} from 'expo-av';
 const Upload = ({navigation}) => {
   const [mediaFile, setMediaFile] = useState({});
   const {postMedia} = useMedia();
   const [loading, setLoading] = useState(false);
   const {update, setUpdate} = useContext(MainContext);
   const {postTag} = useTag();
+  const video = useRef(null);
   const {
     control,
     handleSubmit,
@@ -106,7 +107,17 @@ const Upload = ({navigation}) => {
       <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1}>
         <Card>
           {mediaFile.type === 'video' ? (
-            <Card.Title>Video</Card.Title>
+            <Video
+              ref={video}
+              source={{uri: mediaFile.uri}}
+              style={{width: '100%', height: '60%'}}
+              useNativeControls
+              resizeMode="contain"
+              isLooping
+              onError={(error) => {
+                console.log(error);
+              }}
+            />
           ) : (
             <Card.Image
               source={{uri: mediaFile.uri || 'http://placekitten.com/200/300'}}
