@@ -4,8 +4,8 @@ import {useMedia} from '../hooks/ApiHooks';
 import ListItem from './ListItem';
 import PropTypes from 'prop-types';
 
-const List = ({navigation}) => {
-  const {mediaArray} = useMedia();
+const List = ({navigation, myFileOnly = false}) => {
+  const {mediaArray} = useMedia(myFileOnly);
   return (
     <FlatList
       data={mediaArray}
@@ -18,6 +18,7 @@ const List = ({navigation}) => {
 };
 
 List.propTypes = {
-  navigation: PropTypes.object,
+  navigation: PropTypes.object.isRequired,
+  myFileOnly: PropTypes.bool,
 };
 export default List;
