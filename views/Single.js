@@ -1,5 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useContext} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
+import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
 import {Card, ListItem, Icon, Text} from '@rneui/themed';
@@ -25,29 +26,53 @@ const Single = ({route}) => {
   const {getFavouritesByFileId, postFavourite, deleteFavourite} =
     useFavourite();
   const [userLikesIt, setUserLikesIt] = useState(false);
+  const {user} = useContext(MainContext);
+
   const getOwnerInformation = async () => {
-    const token = await AsyncStorage.getItem('userToken');
-    const owner = await getUserById(userId, token);
-    setOwner(owner);
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      const owner = await getUserById(userId, token);
+      setOwner(owner);
+    } catch (error) {
+      console.error('getOwnerInfoError', error);
+    }
   };
   const getLikes = async () => {
-    const likes = await getFavouritesByFileId(fileId);
-    console.log('likes', likes);
-    setLikes(likes);
+    try {
+      const likes = await getFavouritesByFileId(fileId);
+      console.log('likes', likes);
+      setLikes(likes);
+      for (const like of likes) {
+        if (like.user_id === user.user_id) {
+          setUserLikesIt(true);
+          break;
+        }
+      }
+    } catch (error) {
+      console.error('getLikesError', error);
+    }
   };
 
   const likeFiles = async () => {
-    const token = await AsyncStorage.getItem('userToken');
-    await postFavourite(fileId, token);
-    getLikes();
-    setUserLikesIt(true);
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      await postFavourite(fileId, token);
+      getLikes();
+      setUserLikesIt(true);
+    } catch (error) {
+      console.error('likeFilesError', error);
+    }
   };
 
   const dislikeFiles = async () => {
-    const token = await AsyncStorage.getItem('userToken');
-    await deleteFavourite(fileId, token);
-    getLikes();
-    setUserLikesIt(false);
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      await deleteFavourite(fileId, token);
+      getLikes();
+      setUserLikesIt(false);
+    } catch (error) {
+      console.error('dislikeFilesError', error);
+    }
   };
 
   const unlock = async () => {
