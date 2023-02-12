@@ -110,7 +110,7 @@ const Upload = ({navigation}) => {
             <Video
               ref={video}
               source={{uri: mediaFile.uri}}
-              style={{width: '100%', height: '60%'}}
+              style={{width: '100%', height: 200}}
               useNativeControls
               resizeMode="contain"
               isLooping

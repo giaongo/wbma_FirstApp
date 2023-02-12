@@ -124,14 +124,13 @@ const Single = ({route}) => {
           <Video
             ref={video}
             source={{uri: uploadsUrl + filename}}
-            style={{width: '100%', height: '60%'}}
+            style={{width: '100%', height: 200}}
             useNativeControls
             resizeMode="contain"
             isLooping
             onError={(error) => {
               console.log(error);
             }}
-            usePoster
             posterSource={{uri: uploadsUrl + screenshot}}
           />
         )}
